@@ -60,3 +60,17 @@ Use `./build.sh` to build CiCo and `./run.sh` to run it if using the command lin
 
 ## Expected results
 * Should display "Kong Pheng Thor" for the user name.
+
+# Module 4: Error Prevention
+1. Build and run CiCo.
+2. Type abcd into the card field. The field displays these characters. 
+
+## Expected results
+* Should ignore non-numerical input
+
+# Module 4: Recognition vs Recall in user interface
+1. Build and run CiCo
+2. Enter members 9 digit 111111110
+
+## Expected results
+* Should not allow you to enter the last 0 for the max length is 8
