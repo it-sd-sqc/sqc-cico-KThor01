@@ -41,8 +41,10 @@ public class Main {
     public void insertString(FilterBypass fb, int offset, String stringToAdd, AttributeSet attr)
         throws BadLocationException
     {
-      if (fb.getDocument() != null) {
-        super.insertString(fb, offset, stringToAdd, attr);
+      int currentLength = fb.getDocument().getLength();
+
+      if (stringToAdd.matches("\\d+") && (currentLength + stringToAdd.length() < MAX_LENGTH)) {
+        fb.insertString(offset, stringToAdd, attr);
       }
       else {
         Toolkit.getDefaultToolkit().beep();
@@ -53,8 +55,16 @@ public class Main {
     public void replace(FilterBypass fb, int offset, int lengthToDelete, String stringToAdd, AttributeSet attr)
         throws BadLocationException
     {
-      if (fb.getDocument() != null) {
-        super.replace(fb, offset, lengthToDelete, stringToAdd, attr);
+      if (stringToAdd == null ||  stringToAdd.isEmpty()) {
+        fb.replace(offset, lengthToDelete, stringToAdd, attr);
+        return;
+      }
+
+      int currentLength = fb.getDocument().getLength();
+      int prospectiveLength = currentLength - lengthToDelete + stringToAdd.length();
+
+      if (stringToAdd.matches("\\d+") && prospectiveLength <= MAX_LENGTH) {
+        fb.replace(offset, lengthToDelete, stringToAdd, attr);
       }
       else {
         Toolkit.getDefaultToolkit().beep();
@@ -346,6 +356,9 @@ public class Main {
 
       // 00000000 is guaranteed valid; create if needed.
       command.executeUpdate("INSERT INTO members (name, card, is_checked_in) SELECT 'Developer', '00000000', 0 WHERE NOT EXISTS (SELECT name, card, is_checked_in FROM members WHERE card = '00000000')");
+
+      // 11111111 is guaranteed valid; create if needed.
+      command.executeUpdate("INSERT INTO members (name, card, is_checked_in) SELECT 'Kong Pheng Thor', '11111111', 0 WHERE NOT EXISTS (SELECT name, card, is_checked_in FROM members WHERE card = '11111111')");
 
       // Create parameterized SQL statements.
       statementQueryCard = db.prepareStatement("SELECT id, name, is_checked_in FROM members WHERE card = ? LIMIT 1");
