@@ -106,6 +106,7 @@ public class Main {
   static JLabel labelUser;
   static JLabel labelState;
   static JButton buttonAcknowledge;
+  static JButton buttonExit;
 
   // Timer variables //////////////////////////////////////////////////////////
   static java.util.Timer timer;
@@ -265,7 +266,6 @@ public class Main {
     updateButton.addActionListener(new Update());
     updateButton.setForeground(Color.green);
     panelMain.add(updateButton);
-
     panelMain.add(Box.createVerticalGlue());
 
     // Status panel ///////////////////////////////////////////////////////////
@@ -289,6 +289,12 @@ public class Main {
     labelState.setForeground(Color.magenta);
     panelStatus.add(labelState);
 
+    // Add Exit Button Ticket 501
+    buttonExit = new JButton("EXIT");
+    buttonExit.addActionListener(handler);
+    buttonExit.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+    buttonExit.setForeground(Color.green);
+    panelStatus.add(buttonExit);
     panelStatus.add(Box.createVerticalGlue());
 
     // Error panel ////////////////////////////////////////////////////////////
@@ -312,6 +318,8 @@ public class Main {
     buttonAcknowledge.setForeground(Color.red);
     panelError.add(buttonAcknowledge);
     panelError.add(Box.createVerticalGlue());
+
+
 
     // Add the cards //////////////////////////////////////////////////////////
     deck.add(panelMain, CARD_MAIN);
